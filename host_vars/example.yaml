@@ -1,0 +1,18 @@
+acme_certs:
+- name: # CN
+  email_address:
+  country_name:
+  organization_name:
+  # alt_names is optional
+  alt_names:
+    dns: # list of DNS alt names
+  tlsa_all_ports: true # currently only all ports is supported
+  hosts:
+  - name: # host to deploy to
+    services: # list of services on host to restart
+    # paths is optional, custom paths on the target server for the cert.
+    paths:
+      certificate:
+      fullchain:
+      intermediate:
+      key:

@@ -1,0 +1,19 @@
+- name: Reset TLSA records
+  community.general.nsupdate:
+    key_name: '{{ nsupdate.key_name }}'
+    key_secret: '{{ nsupdate.key_secret }}'
+    key_algorithm: '{{ nsupdate.key_algorithm }}'
+    server: '{{ nsupdate.server }}'
+    zone: '{{ nsupdate.zone }}'
+    type: TLSA
+    record: '{{ item }}'
+    value: "{{ [ tlsa_record.stdout ] }}"
+  delegate_to: localhost
+  loop: "{{ ([ cert.name ] + cert.alt_names.dns|default([])) | map('regex_replace', '^(.*)$', '*._tcp.\\1.') }}"
+  when:
+  - cert.tlsa_all_ports is true
+
+# TODO:
+# - Add multidomain support
+# + restart relevant services
+# + Move all config values to host

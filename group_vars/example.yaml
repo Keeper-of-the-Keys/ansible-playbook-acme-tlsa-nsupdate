@@ -1,0 +1,18 @@
+# It is highly recommended to use ansible-vault for the various secrets/passphrases.
+# nsupdate
+nsupdate:
+  key_name:
+  key_algorithm:
+  key_secret:
+  server: '{{ lookup("dig", "ns.domain.tld") }}'
+  zone: "domain.tld"
+
+# letsencrypt
+acme_defaults:
+  path_local:
+  path_remote:
+  isp_dns:
+  account_email:
+  account_passphrase:
+  acme_directory: https://acme-v02.api.letsencrypt.org/directory
+  #acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
