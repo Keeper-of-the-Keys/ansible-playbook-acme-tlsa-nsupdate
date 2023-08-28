@@ -1,3 +1,10 @@
+# If a host has multiple certs defined tlsa_record will have been overwritten.
+- name: Generate TLSA records
+  ansible.builtin.shell: "tlsa --create --certificate {{ acme_defaults.path_local }}{{ cert.name }}-fullchain.crt  domain.tld | grep TLSA | cut -f 4- -d ' '"
+  changed_when: false
+  register: tlsa_record
+  delegate_to: localhost
+
 - name: Reset TLSA records
   community.general.nsupdate:
     key_name: '{{ nsupdate.key_name }}'
